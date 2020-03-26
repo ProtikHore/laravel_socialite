@@ -22,3 +22,6 @@ Route::get('user/get/social/login/{search_key}', 'UserController@getRecords')->n
 
 Route::get('login/google', 'LoginController@redirectToGoogle');
 Route::get('login/google/callback', 'LoginController@handleGoogleCallback');
+
+Route::get('login/facebook', 'LoginController@redirectToFacebook');
+Route::get('login/facebook/callback', 'LoginController@handleFacebookCallback');

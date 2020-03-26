@@ -71,6 +71,48 @@ class LoginController extends Controller
         }
     }
 
+    public function redirectToFacebook()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    public function handleFacebookCallback()
+    {
+        try {
+
+            $user = Socialite::driver('facebook')->user();
+            dd($user);
+            die();
+            $finduser = User::where('google_id', $user->id)->first();
+            if($finduser){
+                session([
+                    'login_status' => true,
+                    'id' => $finduser->id,
+                    'name' => $finduser->name
+                ]);
+                return redirect('/user');
+            } else{
+                $newUser = User::create([
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'google_id'=> $user->id,
+                    'password' => sha1('123'),
+                    'status' => 'Active'
+                ]);
+                session([
+                    'login_status' => true,
+                    'id' => $newUser->id,
+                    'name' => $newUser->name
+                ]);
+
+                return redirect('/user');
+            }
+
+        } catch (Exception $e) {
+            dd($e->getMessage());
+        }
+    }
+
     public function logout()
     {
         session()->flush();

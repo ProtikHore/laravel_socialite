@@ -88,6 +88,19 @@
         </div>
     </div>
 </div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col fixed-top" style="height: 60px; background-color: #F5F5F5;">
+            <div class="row" style="padding-top: 10px;">
+                <div class="col text-right">
+                    <a href="#" id="user_icon" data-toggle="popover" data-trigger="focus" onclick="return false;"><img src="{{ asset('image/user_icon.png') }}" class="rounded-circle" style="width: 40px; height: 40px;"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container-fluid">
     @yield('content')
 </div>
@@ -105,6 +118,16 @@
 
 
 <script>
+
+    $(document).ready(function () {
+        $('#user_icon').popover({
+            html: true,
+            placement: 'bottom',
+            content: "<ul><li><a href='#' id='user_profile'>Profile</a></li><li><a href='#' id='change_password'>Change Password</li><li><a href='{{ url('logout') }}'>Log out</a></li></ul>",
+            title: '<div id="user_title" style="font-weight: bold;">{{ session('user_type') . ' ' . session('name') }}</div><div class="text-left" style="font-size:70%;"></div>'
+        });
+    });
+
     $body = $("body");
     $(document).on({
         ajaxStart: function() {

@@ -41,31 +41,26 @@ class LoginController extends Controller
         try {
 
             $user = Socialite::driver('google')->user();
-
             $finduser = User::where('google_id', $user->id)->first();
-
             if($finduser){
-
                 session([
                     'login_status' => true,
-                    'id' => $user->id,
-                    'name' => $user->name
+                    'id' => $finduser->id,
+                    'name' => $finduser->name
                 ]);
-
                 return redirect('/user');
-
-            }else{
+            } else{
                 $newUser = User::create([
                     'name' => $user->name,
                     'email' => $user->email,
                     'google_id'=> $user->id,
-                    'password' => sha1('123')
+                    'password' => sha1('123'),
+                    'status' => 'Active'
                 ]);
-
                 session([
                     'login_status' => true,
-                    'id' => $user->id,
-                    'name' => $user->name
+                    'id' => $newUser->id,
+                    'name' => $newUser->name
                 ]);
 
                 return redirect('/user');

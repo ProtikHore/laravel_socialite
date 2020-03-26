@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->string('mobile_number')->nullable();
             $table->string('google_id')->nullable();
+            $table->string('facebook_id')->nullable();
             $table->double('sequence')->unsigned()->nullable();
             $table->string('status',25)->nullable();
             $table->string('narrative',255)->nullable();

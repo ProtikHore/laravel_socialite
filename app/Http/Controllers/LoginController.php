@@ -81,8 +81,8 @@ class LoginController extends Controller
         try {
 
             $user = Socialite::driver('facebook')->user();
-            dd($user);
-            die();
+//            dd($user);
+//            die();
             $finduser = User::where('google_id', $user->id)->first();
             if($finduser){
                 session([
@@ -95,7 +95,7 @@ class LoginController extends Controller
                 $newUser = User::create([
                     'name' => $user->name,
                     'email' => $user->email,
-                    'google_id'=> $user->id,
+                    'facebook_id'=> $user->id,
                     'password' => sha1('123'),
                     'status' => 'Active'
                 ]);
